@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet"  href={{ url_for("static", filename='index.css') }}>
+    <link rel="stylesheet"  href={{ url_for("static", filename='font-awesome.min.css') }}>
+    <link rel="stylesheet"  href={{ url_for("static", filename='solid.min.css') }}>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="sidebar"> 
+        <div class="logoimg"> <img src="static/accets/Logo.png">
+        </div>
+        <div class="topmenu">
+            {% for item in left_top_menu %}
+            <li class="navlist">
+                <a class="icontext">
+                    <div class="navlist_chart">
+                        <div class="navlist_shape">
+                            <i class="fa {{item["icon"]}}"></i>
+                        </div>
+                    </div>
+                    <div class="navlist_product">{{item["name"]}}</div>
+                    <div class="chevrondown">
+                        <div class="fa {{item["arrow"]}}" style="color:#7C8DB5;"></div>
+                    </div>
+                    <div class="navi">
+                        <div class="navi_img""><img src="static/accets/Indicator.png"></div>
+                    </div>
+                </a>        
+            </li> 
+            {% endfor %}
+   </div>
+        <div class="bottommenu">
+        {% for bmenu in left_bottom_menu %}
+            <div class="navlist">
+                <li class="iconlist">
+                    <div class="info">
+                        <div class="shape">
+                              <i class= "{{bmenu['icon']}}" style="color: {{bmenu['color']}};"></i>
+                        </div>
+                    </div>
+                    <div class="product"
+                     {%if bmenu["name"] == "Log Out" %}
+                         style="color: red ;"
+                     {% endif %}>
+                     {{bmenu["name"]}}
+                    </div>
+                    <div class="navi"><div class="navi_img""><img src="static/accets/Indicator.png"></div>
+                </li>
+            </div>
+            </li>
+        {% endfor %}   
+        </div>
+    </div>
+    <div class="mainbar">
+        <div class="header_grid">
+                <div class="header_text">
+                    <div class="header_title">Welcome Back, Marci</div>
+                    <div class="header_body">Here is the information about all your orders</div>
+                </div>
+                <div class="header_elements">
+                        <div class="icons">
+                            <img src="static/accets/search.png" style="width: 24px;height: 24px; cursor: pointer">
+                            <img src="static/accets/bell.png" style="width: 24px;height: 24px; cursor: pointer;">
+                        </div>
+                        <div class="profile">
+                            <img src="static/accets/avatar.png">
+                            <div class="text_name_box">
+                            <div class="name">Marci Fumons</div>
+                            <div class = "chevron_down"><img src="static/accets/chevron-down.png"></div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+        <div class="cards_box">
+            {% for card in  card_box %}
+            <div class="card">
+                <div class="top">
+                    <div class="text">
+                        <div class="text_main">{{card["text_main"]}}</div>
+                        <div class="text_body">{{card["text_body"]}}</div>
+                    </div>
+                    <div class="icon">
+                       <div class="users"> 
+                       <div class="shape"><i class="fa {{card["icon"]}}"></i></div>
+                       </div>  
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="amount">
+                       <div class = "up">
+                        {%if card["text_bottom_text_1"] == "+" %}
+                         <div class="shape"><i class="fa {{card["arrow"]}}" style = "transform: rotate(45deg);color: #34C759;"></i></div></div>
+                         {%elif card["text_bottom_text_1"] == "-" %}
+                         <div class="shape"><i class="fa {{card["arrow"]}}" style = "transform: rotate(-45deg);color: #FF3B30;;"></i></div></div>
+                        {% endif %} 
+                         <div class="arrow_text">{{card["arrow-text"]}}</div>   
+                    </div>
+                    <div class="text_bottom">{{card["text_bottom_text_1"]}}{{card["text_bottom_int"]}}{{card["text_bottom_text_2"]}}</div>
+                </div>
+            </div>
+            <div class="divider" style="display:{{card["divider"]}};">
+                <img src="static/accets/divider.png">
+            </div>
+            {% endfor %} 
+         </div>
+        <div class="chart_img"><img src="static/accets/charts_img.png" style="width: 100%;
+            height: 100%;">
+        </div>    
+        <div class="orderlist">
+                <div class="frame">
+                    <div class="od_list">Order List</div>
+                    <div class="od_filter">
+                        <div class="od_filter2">
+                            <div class="monthly">Monthly</div>
+                            <div class="fa fa-chevron-down" style="color:#7C8DB5;"></div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead class="head" style="text-align: left;">
+                        {% for row in table_head %} 
+                        <td class="status_order"> 
+                         <div class="status_order_text_1">{{row['Name']}}</div>
+                         <div style="display:{{row['Arrow']}}; font-style: normal;">
+                          <i class="fa fa-arrow-up"></i>
+                          <i class="fa fa-arrow-down"></i>
+                        </td>
+                          {% endfor %}
+                        </thead>
+                <div style="position: relative;overflow: auto;width: 100%;">                
+                <tbody style="width: 100%; position: relative;overflow-x: auto;">      
+                {% for row in table_row %}
+                <tr class="row">
+                  <td class="row_data">{{row['NO']}}</td>
+                  <td class="row_data">{{row['ID']}}</td>
+                  <td class="row_data">{{row['Date']}}</td>
+                  <td class="row_data">{{row['Customer Name']}}</td>
+                  <td class="row_data">{{row['Location']}}</td>
+                  <td class="row_data">{{row['Amount']}}</td>
+                  <td class="status"><div class="shape" style="font-size: 80%;">
+                    {%if row['Status Order'] == "New Order" %} 
+                    <i class="fa fa-circle" aria-hidden="true" style="color: #34C759;"></i>
+                    {% else %}
+                    <i class="fa fa-circle" aria-hidden="true" style="color:  #FF3B30;"></i>
+                    {% endif %}
+                    {{ row['Status Order']}}</div></td>
+                  <td class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></td>
+                </tr>
+               {% endfor %}
+               </div>
+               </table>
+        </div>            
+    </div>
+</body>
+</html>
